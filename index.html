@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Domus Shop</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+  h1 { text-align: center; }
+  .produto { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; }
+  .produto h2 { margin: 0 0 10px 0; }
+  .produto button { background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; }
+  .produto button:hover { background-color: #218838; }
+  #carrinho { margin-top: 20px; }
+  #finalizar { margin-top: 10px; padding: 10px 20px; font-size: 1rem; background-color: #007bff; color: white; border: none; cursor: pointer; }
+  #finalizar:hover { background-color: #0056b3; }
+</style>
+</head>
+<body>
+<h1>Domus Shop - Produtos</h1>
+
+<div id="produtos"></div>
+
+<h2>Carrinho</h2>
+<ul id="carrinho"></ul>
+<button id="finalizar">Finalizar Pedido</button>
+
+<script>
+  const produtos = [
+    { nome: "Microfone De Lapela Para Celular Profissional", preco: 2.00 },
+    { nome: "Fone De Ouvido Resistente Bluetooth KTS Original", preco: 35.00 },
+    { nome: "Fone De Ouvido Com Mic Sem Fio Kapbom Bluetooth 5.0", preco: 30.00 },
+    { nome: "Mini Fone Ouvido S/ Fio Gamer RGB Bluetooth H Maston", preco: 49.99 },
+    { nome: "Fone JBL 950 Bluetooth Qualidade", preco: 41.00 },
+    { nome: "Fone Ouvido i12 Bluetooth 5.0 Conecta Automático H Maston", preco: 35.00 },
+    { nome: "MICROFONE LAPELA SEM FIO iPHONE Kaidi", preco: 58.00 },
+    { nome: "Microfone Sem Fio Profissional Preto Lelong Alcance 30m", preco: 49.99 },
+    { nome: "MYRON1 1 1 Fone com Par De Almofadas De Ouvido", preco: 69.99 },
+    { nome: "Fone De Ouvido Bluetooth Wireless Sem Fio AGOLD", preco: 39.00 },
+    { nome: "Fone De Ouvido Bluetooth JBL Wave 300tws", preco: 38.00 },
+    { nome: "Fone de Ouvido Kids Infantil Sem Fio Bluetooth Wireless", preco: 39.00 },
+    { nome: "Fones De Ouvido Sem Fio TWS A9 Pro Touch Screen ANC", preco: 55.00 },
+    { nome: "Fone De Ouvido Tela Touch Original Kaidi 7019", preco: 77.99 },
+    { nome: "FONE IPHONE Entrada iPhone Kapbom", preco: 9.80 },
+    { nome: "Microfones Duplo Dinâmico Sem Fio Profissional Recarregável", preco: 125.00 },
+    { nome: "Microphone Bluetooth Som USB Cartao KTV Karaoke", preco: 45.00 },
+    { nome: "Fone Qualidade com Lacrado TWS 5.1 com Visor", preco: 25.00 },
+    { nome: "Fone sem fio Bluetooth Hmaston Original", preco: 68.00 },
+    { nome: "Fone Bluetooth Airpods Pro com Estojo Personalizado", preco: 47.99 },
+    { nome: "Fone De Ouvido Bluetooth P/ Celular Sem Fio Kaidi Tws KD-795", preco: 68.00 }
+  ];
+
+  const carrinho = [];
+  const produtosDiv = document.getElementById('produtos');
+  const carrinhoUl = document.getElementById('carrinho');
+  const finalizarBtn = document.getElementById('finalizar');
+
+  function atualizarCarrinho() {
+    carrinhoUl.innerHTML = '';
+    carrinho.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+      carrinhoUl.appendChild(li);
+    });
+  }
+
+  produtos.forEach((produto, index) => {
+    const div = document.createElement('div');
+    div.className = 'produto';
+    div.innerHTML = `<h2>${produto.nome}</h2><p>R$ ${produto.preco.toFixed(2)}</p>`;
+    const btn = document.createElement('button');
+    btn.textContent = 'Adicionar ao Carrinho';
+    btn.onclick = () => {
+      carrinho.push(produto);
+      atualizarCarrinho();
+    };
+    div.appendChild(btn);
+    produtosDiv.appendChild(div);
+  });
+
+  finalizarBtn.onclick = () => {
+    if(carrinho.length === 0) {
+      alert('Seu carrinho está vazio!');
+      return;
+    }
+    let mensagem = 'Olá, gostaria de fazer o pedido dos seguintes itens:%0A';
+    carrinho.forEach(item => {
+      mensagem += `- ${item.nome} por R$ ${item.preco.toFixed(2)}%0A`;
+    });
+    const telefone = '5562992759920'; // seu número com código do Brasil e DDD sem parênteses
+    const urlWhatsapp = `https://wa.me/${telefone}?text=${mensagem}`;
+    window.open(urlWhatsapp, '_blank');
+  };
+</script>
+</body>
+</html>
